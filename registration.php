@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Check if username has been filled in
     if (empty(trim($_POST["username"]))) {
         $username_err = "Please enter a username!";
-        echo $username_err;
     } else {
         // Building a select query
         $db = "SELECT id FROM users WHERE username = ?";
@@ -42,24 +41,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // Checking if username is alerady taken
                 if ($stmt->num_rows == 1) {
                     $username_err = "This username is already taken. Please choose another.";
-                    echo $username_err;
                 } else {
                     $username = trim($_POST["username"]);
                 }
             } else {
                 echo "Something went wrong! Please try again later. username taken";
             }
+
+            // Closing statement
+            $stmt->close();
         } else {
             echo "Username check failed";
         }
-        // Closing statement
-        $stmt->close();
     }
+    echo $username_err;
+
+    // Password processing
+    if (empty(trim($_POST["password"]))) {
+        $password_err = "Please enter a password.";
+    } elseif (strlen(trim($_POST["password"])) < 8) {
+        $password_err = "Password must be at least 8 characters long.";
+    } else {
+        $password = trim($_POST["password"]);
+        echo "password accepted";
+    }
+    echo $password_err;
+
+    // Password confirmation
+    if (empty(trim($_POST["password_confirmation"]))) {
+        $password_confirmation_err = "Please confirm password.";
+    } elseif ((trim($_POST["password_confirmation"]) != $password) && (empty($password_err))) {
+        $password_confirmation_err = "Password did not match.";
+    } else {
+        $password_confirmation = trim($_POST["password_confirmation"]);
+    }
+    echo $password_confirmation_err;
 
 
 
     // Insert into database if there are no errors
-    if (empty($username_err)) {
+    if (empty($username_err) && empty($password_err) && empty($password_confirmation_err)) {
 
         // Prepare statement for pushing to db
         $db = "INSERT INTO users (username, password) VALUES (?, ?)";
@@ -79,9 +100,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
                 echo "Something went wrong! Please try again later.";
             }
+            // Closing statement
+            $stmt->close();
         }
-        // Closing statement
-        $stmt->close();
     }
 
     // Close db connection
@@ -90,4 +111,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 } else {
     echo "You are not posting";
 }
-

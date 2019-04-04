@@ -8,6 +8,11 @@
     <title>My Registration Page</title>
 </head>
 
+<?php
+$username_err = "";
+$password_err = "";
+$password_confirmation_err = ""; ?>
+
 <body>
     <h2>Sign Up</h2>
 
