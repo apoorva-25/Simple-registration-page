@@ -51,10 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Closing statement
             $stmt->close();
         } else {
-            echo "Username check failed";
+            // echo "Username check failed";
         }
     }
-    echo $username_err;
+    // echo $username_err;
 
     // Password processing
     if (empty(trim($_POST["password"]))) {
@@ -63,9 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $password_err = "Password must be at least 8 characters long.";
     } else {
         $password = trim($_POST["password"]);
-        echo "password accepted";
+        // echo "password accepted";
     }
-    echo $password_err;
+    // echo $password_err;
 
     // Password confirmation
     if (empty(trim($_POST["password_confirmation"]))) {
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $password_confirmation = trim($_POST["password_confirmation"]);
     }
-    echo $password_confirmation_err;
+    // echo $password_confirmation_err;
 
 
 
@@ -96,7 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // Execute statement
             if ($stmt->execute()) {
-                echo "Registered";
+                // echo "Registered";
+               
             } else {
                 echo "Something went wrong! Please try again later.";
             }
@@ -104,10 +105,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->close();
         }
     }
+    else {
+        $url_errors = urlencode("usernameerr=".$username_err."&passworderr=".$password_err."&passwordconferr=".$password_confirmation_err);
+        $location = "index.php?".$url_errors;
+        $mysqli->close(); // close db because errors
+        header("location: $location");
+    }
 
     // Close db connection
     $mysqli->close();
-    echo "You posting";
+    // echo "You posting";
 } else {
     echo "You are not posting";
 }
