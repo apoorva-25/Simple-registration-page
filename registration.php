@@ -96,7 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // Execute statement
             if ($stmt->execute()) {
-                // echo "Registered";
+                // Redirect user to welcome page
+                header("location: welcome.php");
                
             } else {
                 echo "Something went wrong! Please try again later.";
