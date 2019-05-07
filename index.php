@@ -70,7 +70,7 @@ if (!empty($get_errors)) {
                         <input type="password" class="form-control" placeholder="Repeat password"
                             name="password_confirmation" id="password_confirmation" required>
                         <span class="form-text"><?php echo $password_confirmation_err; ?></span>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" id="pass-conf-feedback">
                             Please repeat password.
                         </div>
                     </div>
@@ -101,7 +101,6 @@ if (!empty($get_errors)) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <!-- <script src="form-validation.js"></script> -->
 
     <script>
         // Front end form validation
@@ -113,20 +112,31 @@ if (!empty($get_errors)) {
 
                 // Loop over them and prevent submission
                 var validation = Array.prototype.filter.call(forms, function (form) {
+
                     form.addEventListener('submit', function (event) {
+                        var pwd_feedback = document.getElementById('pass-conf-feedback');
+                        var pwd = document.getElementById('password').value;
+                        var pwd_conf = document.getElementById('password_confirmation');
+                        var pwd_conf_value = pwd_conf.value;
+
                         if (form.checkValidity() === false) {
+                            console.log('sdfwer')
                             event.preventDefault();
                             event.stopPropagation();
+                            pwd_feedback.innerText = 'Please repeat password.';
                         }
-                        form.classList.add('was-validated');
-                        var pwd = document.getElementById('password').value;
-                        var pwd_conf = document.getElementById('password_confirmation')
-                            .value;
-                        if (pwd === pwd_conf) {
+
+                        if (pwd === pwd_conf_value) {
                             console.log("matched");
                         } else {
                             console.log("not matched");
+                            event.preventDefault();
+                            event.stopPropagation();
+                            pwd_feedback.innerText = 'Passwords must match.';
+                            pwd_conf.setCustomValidity('Passwords must match');
                         }
+
+                        form.classList.add('was-validated');
 
                     }, false);
                 });
