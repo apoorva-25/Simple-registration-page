@@ -27,7 +27,6 @@ if (!empty($get_errors)) {
     $password_err = htmlspecialchars($get_errors["passworderr"]);
     $password_confirmation_err = htmlspecialchars($get_errors["passwordconferr"]);
 }
-
 ?>
 
 <body>
@@ -79,6 +78,8 @@ if (!empty($get_errors)) {
                         <input type="submit" class="btn btn-primary" value="Submit">
                     </div>
 
+                    <p>Already have an account? <a href="index_login.php">Sign in</a>.</p>
+
                 </form>
             </div>
             <div class="col-md-3 col-sm-12">
@@ -87,6 +88,10 @@ if (!empty($get_errors)) {
         </div>
 
     </div>
+
+
+
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -99,7 +104,7 @@ if (!empty($get_errors)) {
     <!-- <script src="form-validation.js"></script> -->
 
     <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        // Front end form validation
         (function () {
             'use strict';
             window.addEventListener('load', function () {
@@ -113,7 +118,7 @@ if (!empty($get_errors)) {
                             event.preventDefault();
                             event.stopPropagation();
                         }
-                        // form.classList.add('was-validated');
+                        form.classList.add('was-validated');
                         var pwd = document.getElementById('password').value;
                         var pwd_conf = document.getElementById('password_confirmation')
                             .value;
