@@ -67,12 +67,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             header("location: welcome.php");
                         } else {
                             // Compile an error message if password is not valid
-                            $password_err = "The password you entered was not valid.";
+                            $password_err = "The username or password you entered was not valid.";
                         }
                     }
                 } else {
                     // Compile an error message if username doesn't exist
-                    $username_err = "No account found with that username.";
+                    $username_err = "The username or password you entered was not valid.";
                 }
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
